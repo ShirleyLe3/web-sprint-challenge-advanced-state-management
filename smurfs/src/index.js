@@ -6,13 +6,14 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
+// import { ADD_SMURF, DELETE_SMURF } from "./actions/action";
 
 const initialState = {
   smurfs: [],
   isLoading: false,
 };
 
-const reducer = (state = initialState, action) => {
+export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "FETCH_SMURFS_PENDING":
       return {
@@ -25,10 +26,17 @@ const reducer = (state = initialState, action) => {
         smurfs: action.payload,
         isLoading: false,
       };
-    case "FETCH_SMURFS_ERROR":
+    case "ADD_SMURF":
+      //   const smurf = { ...action.payload };      //  returns all but we need only the added
       return {
         ...state,
-        isLoading: false,
+        smurfs:
+          // ...state.smurfs, smurf],
+          action.payload,
+      };
+    case "DELETE_SMURF":
+      return {
+        smurfs: action.payload,
       };
     default:
       return state;
